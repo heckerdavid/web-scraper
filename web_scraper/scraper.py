@@ -3,14 +3,7 @@ from bs4 import BeautifulSoup
 from requests.api import get
 
 url = 'https://en.wikipedia.org/wiki/Fukushima_nuclear_disaster'
-page = requests.get(url)
 
-soup = BeautifulSoup(page.content, 'html.parser')
-
-results = soup.find_all(title='Wikipedia:Citation needed')
-
-for result in results:
-    print(result)
 
 def get_citations_needed_count(url) -> int:
     page = requests.get(url)
@@ -25,4 +18,22 @@ def get_citations_needed_count(url) -> int:
 
     return total
 
+
+def get_citations_needed_report(url) -> str:
+    page = requests.get(url)
+
+    soup = BeautifulSoup(page.content, 'html.parser')
+
+    results = soup.find_all(title='Wikipedia:Citation needed')
+
+    parents = []
+    for result in results:
+        parents.append(result.parent.parent.parent.text)
+
+    for parent in parents:
+        print(parent)
+
+
+
 print(get_citations_needed_count(url))
+get_citations_needed_report(url)
