@@ -29,7 +29,8 @@ def get_citations_needed_report(url) -> str:
     parents = []
     for result in results:
         parents.append(result.parent.parent.parent.text)
-
+        
+    print('Citation Needed For:')
     for parent in parents:
         print(parent)
 
